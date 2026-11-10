@@ -1,11 +1,14 @@
 import express from 'express'
-import { loadMetro, metroIsochrone, rideMinutes } from './metro.mjs'
+import { existsSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { loadMetro, metroIsochrone, rideMinutes } from './metro.mjs'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const port = Number(process.env.PORT || 8787)
+const host = process.env.HOST || '0.0.0.0'
 const valhallaUrl = process.env.VALHALLA_URL || 'http://127.0.0.1:8002'
+const distDir = join(root, 'dist')
 
 const metroFiles = [join(root, 'data/metro-overpass.json'), join(root, 'data/mcc-overpass.json')]
 const graph = loadMetro(metroFiles)
@@ -111,6 +114,13 @@ function areasOnly(payload) {
   return { type: 'FeatureCollection', features }
 }
 
-app.listen(port, '127.0.0.1', () => {
-  console.log(`api http://127.0.0.1:${port}`)
+if (existsSync(distDir)) {
+  app.use(express.static(distDir))
+  app.get(/^(?!\/api(?:\/|$)).*/, (_request, response) => {
+    response.sendFile(join(distDir, 'index.html'))
+  })
+}
+
+app.listen(port, host, () => {
+  console.log(`app http://${host}:${port}`)
 })
