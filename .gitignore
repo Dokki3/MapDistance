@@ -1,0 +1,6 @@
+node_modules/
+dist/
+data/*.pbf
+data/valhalla/
+*.log
+.DS_Store

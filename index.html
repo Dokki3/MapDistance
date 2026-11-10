@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Доступность — Москва</title>
+  </head>
+  <body>
+    <div id="map"></div>
+
+    <header class="topbar">
+      <div class="wordmark">Доступность</div>
+      <div class="hint" id="hint">Нажмите на карту</div>
+    </header>
+
+    <div class="banner" id="banner" hidden></div>
+
+    <aside class="legend">
+      <div class="legend-title" id="legend-title">Области</div>
+      <div class="row"><i class="swatch walk"></i>Пешком</div>
+      <div class="row"><i class="swatch metro"></i>Метро</div>
+      <div class="row"><i class="swatch car"></i>Машина</div>
+      <div class="note">Машина без учёта пробок</div>
+    </aside>
+
+    <div class="zooms">
+      <button id="zoom-in" type="button" aria-label="Ближе">+</button>
+      <button id="zoom-out" type="button" aria-label="Дальше">−</button>
+    </div>
+
+    <div id="callout" class="callout">
+      <button id="close" class="close" type="button" aria-label="Закрыть">×</button>
+      <div class="kicker">Время в пути</div>
+      <div class="time"><span id="time-value">30</span><span class="unit">мин</span></div>
+      <input id="time-range" type="range" min="10" max="60" step="5" value="30" aria-label="Минуты" />
+      <div class="scale"><span>10</span><span>60</span></div>
+      <button id="build" class="go" type="button">Показать области</button>
+      <div id="status" class="status"></div>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
